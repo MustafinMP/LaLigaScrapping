@@ -8,7 +8,6 @@ from db_session import SqlAlchemyBase
 class Team(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'team'
 
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    laliga_id: Mapped[int] = mapped_column(primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String)
-    slug: Mapped[str] = mapped_column(String, index=True)
     image: Mapped[str] = mapped_column(String)

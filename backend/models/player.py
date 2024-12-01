@@ -12,5 +12,5 @@ class Player(SqlAlchemyBase, SerializerMixin):
     name: Mapped[str] = mapped_column(String)
     nickname: Mapped[str] = mapped_column(String)
 
-    team_id: Mapped[int] = mapped_column(ForeignKey('team.id'))
-    team = relationship('Team')
+    team_id: Mapped[int] = mapped_column(ForeignKey('team.laliga_id'))
+    team = relationship('Team', foreign_keys=[team_id])
