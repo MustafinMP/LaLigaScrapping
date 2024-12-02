@@ -1,9 +1,11 @@
+import asyncio
+
 from bs4 import BeautifulSoup
 import requests
 import json
 
 import db_session
-from backend.repositories.match import MatchRepository
+from repositories.match import MatchRepository
 from repositories.goal import GoalRepository
 from repositories.player import PlayerRepository
 from repositories.team import TeamRepository
@@ -17,29 +19,42 @@ class Scrapper:
         return BeautifulSoup(response.text, "lxml")
 
     @staticmethod
-    def scrap_results(gameweek: int = 13) -> None:
-        url = f'https://www.laliga.com/en-RU/laliga-easports/results/2024-25/gameweek-{13}'
+    async def scrap_all_gameweeks():
+        print('Parse all gameweeks')
+        gameweeks = 38
+        for gameweek in range(1, gameweeks + 1):
+            await Scrapper.scrap_gameweek_results(gameweek)
+
+    @staticmethod
+    async def scrap_gameweek_results(gameweek: int = 13) -> None:
+        print(f'Parse Gameweek {gameweek}')
+        url = f'https://www.laliga.com/en-RU/laliga-easports/results/2024-25/gameweek-{gameweek}'
         page = Scrapper.get_page(url)
         for script in page.find_all('script'):
             if "SportsEvent" in script.text:
                 url = json.loads(script.text)['url']
-                data = Scrapper.scrap_match(url)
-                if data is not None:
-                    Scrapper.process_data(data, url)
+                if not Scrapper._match_is_exist(url):
+                    try:
+                        data = await Scrapper.get_scrap_data(url)
+                        await Scrapper.process_data(data, url)
+                    except Exception:
+                        print('Превышено время ожидания ответа от ресурса')
+                        await asyncio.sleep(30)
 
     @staticmethod
-    def scrap_match(match_url: str) -> None:
+    def _match_is_exist(match_url) -> bool:
         with db_session.create_session() as session:
             repository = MatchRepository(session)
-            if repository.get_by_url(match_url) is not None:
-                return None  # страница уже была просмотрена и сохранена в базе
+            return repository.get_by_url(match_url) is not None
 
+    @staticmethod
+    async def get_scrap_data(match_url: str) -> dict:
         for script in Scrapper.get_page(match_url).find_all('script'):
             if 'props' in script.text:
                 return json.loads(script.text)['props']['pageProps']
 
     @staticmethod
-    def process_data(data: dict, match_url: str):
+    async def process_data(data: dict, match_url: str):
         with db_session.create_session() as session:
             team_repository = TeamRepository(session)
             goal_repository = GoalRepository(session)
@@ -52,7 +67,7 @@ class Scrapper:
             home_team_data = game["home_team"]
             if (home_team := team_repository.get_by_laliga_id(home_team_data['id'])) is None:
                 team_repository.add(
-                    home_team_data["name"],
+                    home_team_data["nickname"],
                     home_team_data["id"],
                     home_team_data["shield"]['url']
                 )
@@ -60,7 +75,7 @@ class Scrapper:
             away_team_data = game["away_team"]
             if (away_team := team_repository.get_by_laliga_id(away_team_data['id'])) is None:
                 team_repository.add(
-                    away_team_data["name"],
+                    away_team_data["nickname"],
                     away_team_data["id"],
                     away_team_data["shield"]['url']
                 )

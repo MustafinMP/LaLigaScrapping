@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, desc
 from sqlalchemy.orm import Session
 
 from backend.models.match import Match
@@ -33,3 +33,8 @@ class MatchRepository:
     def get_by_url(self, url: str) -> Match:
         stmt = select(Match).where(Match.url == url)
         return self.session.scalar(stmt)
+
+    def get_all(self) -> list[Match]:
+        stmt = select(Match).order_by(desc(Match.date))
+        return self.session.scalars(stmt).unique().all()
+
