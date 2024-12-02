@@ -1,6 +1,8 @@
 from sqlalchemy import select, and_
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import functions
 
+from models.goal import Goal
 from models.player import Player
 
 
@@ -24,3 +26,7 @@ class PlayerRepository:
             )
         )
         return self.session.scalar(stmt)
+
+    def get_all(self):
+        stmt = select(Player).outerjoin(Player.goals)
+        return self.session.scalars(stmt).all()

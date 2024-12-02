@@ -1,0 +1,38 @@
+.player-data-header {
+    display: grid;
+    grid-template-columns: 1fr 6fr 4rem;
+    width: 100%;
+    height: 3rem;
+    padding: 0 1rem 0 1rem;
+    background: var(--primary);
+    color: white;
+    font-weight: bold;
+}
+
+.player-data {
+    display: grid;
+    grid-template-columns: 1fr 6fr 4rem;
+    height: 3rem;
+    padding: 0 1rem 0 1rem;
+    width: 100%;
+}
+
+.player-data:nth-child(odd) {
+    background: #eee;
+}
+
+.player-data img {
+    width: 2rem;
+    height: 2rem;
+    padding-top: 0.5rem;
+}
+
+.player-data .score {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+#section-players {
+    padding: 4rem 30% 30%;
+}
+

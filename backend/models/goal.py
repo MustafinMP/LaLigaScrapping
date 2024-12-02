@@ -17,7 +17,7 @@ class Goal(SqlAlchemyBase, SerializerMixin):
     match_ = relationship('Match', foreign_keys=[match_id], backref='goals')
 
     player_id: Mapped[int] = mapped_column(ForeignKey('player.id'))
-    player = relationship('Player', foreign_keys=[player_id])
+    player = relationship('Player', foreign_keys=[player_id], backref='goals')
 
     assist_player_id: Mapped[Optional[int]] = mapped_column(ForeignKey('player.id'), nullable=True)
-    assist_player = relationship('Player', foreign_keys=[assist_player_id])
+    assist_player = relationship('Player', foreign_keys=[assist_player_id], backref='assists')

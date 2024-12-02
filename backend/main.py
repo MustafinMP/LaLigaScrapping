@@ -9,6 +9,8 @@ from starlette.staticfiles import StaticFiles
 
 import db_session
 from routers.matches import router as match_router
+from routers.goals import router as goals_router
+from routers.players import router as player_router
 from routers.pages import router as pages_router
 from services import scrapper
 
@@ -31,13 +33,13 @@ app.add_middleware(
 app.mount('/static', StaticFiles(directory='../frontend/static', html=False))
 
 app.include_router(match_router, prefix='/api')
+app.include_router(goals_router, prefix='/api')
+app.include_router(player_router, prefix='/api')
 app.include_router(pages_router, prefix='')
 
 
 if __name__ == '__main__':
     db_session.init_app()
-    run = Thread(target=uvicorn.run, args=['main:app'])
     scrap = Thread(target=asyncio.run, args=[scrapper.Scrapper.scrap_all_gameweeks()], daemon=True)
-    run.start()
-    time.sleep(1)
     scrap.start()
+    uvicorn.run('main:app')

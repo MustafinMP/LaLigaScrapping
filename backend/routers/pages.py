@@ -9,5 +9,10 @@ templates = Jinja2Templates(directory='../frontend/templates')
 
 
 @router.get('/matches')
-def login(request: Request):
+def matches(request: Request):
     return templates.TemplateResponse('matches.html', {'request': request})
+
+
+@router.get('/players')
+def players(request: Request):
+    return templates.TemplateResponse('players.html', {'request': request})
