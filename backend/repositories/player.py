@@ -28,5 +28,5 @@ class PlayerRepository:
         return self.session.scalar(stmt)
 
     def get_all(self):
-        stmt = select(Player).outerjoin(Player.goals)
+        stmt = select(Player)
         return self.session.scalars(stmt).all()

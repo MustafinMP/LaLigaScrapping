@@ -13,6 +13,10 @@ class TeamRepository:
         stmt = select(Team).where(Team.laliga_id == laliga_id)
         return self.session.scalar(stmt)
 
+    def get_all(self) -> list[Team]:
+        stmt = select(Team)
+        return self.session.scalars(stmt)
+
     def add(self, name: str, laliga_id: int, image: str) -> None:
         team = self.get_by_laliga_id(laliga_id)
         if team is None:

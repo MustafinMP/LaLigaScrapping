@@ -1,0 +1,67 @@
+{% extends "basic.html" %}
+
+{% block links %}
+<link rel="stylesheet" href="../static/css/result_table.css">
+{% endblock %}
+
+{% block content %}
+<section id="section-results">
+    <article class="result-data-header">
+        <p></p>
+        <p>Команда</p>
+        <p class="score">Всего игр</p>
+        <p class="score">Победы</p>
+        <p class="score">Ничья</p>
+        <p class="score">Поражения</p>
+        <p class="score">Очки</p>
+    </article>
+    <article class="result-data" v-for="team in result_table">
+        <img :src="[[ team.image ]]">
+        <p>[[ team.name ]]</p>
+        <p class="score">[[ team.match_count ]]</p>
+        <p class="score">[[ team.wins ]]</p>
+        <p class="score">[[ team.draws ]]</p>
+        <p class="score">[[ team.loses ]]</p>
+        <p class="score">[[ team.points ]]</p>
+    </article>
+</section>
+
+<script>
+    let nav_item = document.querySelector('#results');
+    nav_item.classList.add('current-a');
+</script>
+<script type="module">
+    async function getData() {
+        const url = 'http://localhost:8000/api/matches/result-table';
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const json = await response.json();
+            console.log(json);
+            return json;
+        } catch (error) {
+            console.error(error.message);
+            return null;
+        }
+    }
+
+    import {createApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+    createApp({
+        data() {
+            getData().then(data => this.result_table = data)
+            return {
+                result_table: null
+            }
+        },
+        delimiters: ["[[", "]]"],
+        compilerOptions: {
+            delimiters: ["[[", "]]"]
+        },
+        methods: {}
+    }).mount('#section-results')
+</script>
+{% endblock %}

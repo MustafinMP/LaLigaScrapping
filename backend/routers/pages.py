@@ -16,3 +16,8 @@ def matches(request: Request):
 @router.get('/players')
 def players(request: Request):
     return templates.TemplateResponse('players.html', {'request': request})
+
+
+@router.get('/result-table')
+def result_table(request: Request):
+    return templates.TemplateResponse('results.html', {'request': request})
