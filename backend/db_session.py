@@ -12,7 +12,7 @@ def init_app() -> None:
 
     if SessionFactory:
         return
-    print(f"Подключение к базе данных")
+    print(f"INFO:    Connect to laliga.sqlite")
     engine = create_engine(DATABASE_URL, echo=False)
     SessionFactory = sessionmaker(bind=engine)
     SqlAlchemyBase.metadata.create_all(engine)
