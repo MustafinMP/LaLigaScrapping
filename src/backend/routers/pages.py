@@ -10,20 +10,20 @@ templates = Jinja2Templates(directory='../frontend/templates')
 
 
 @router.get('/')
-def home():
+async def home():
     return RedirectResponse("/matches")
 
 
 @router.get('/matches')
-def matches(request: Request):
+async def matches(request: Request):
     return templates.TemplateResponse('matches.html', {'request': request})
 
 
 @router.get('/players')
-def players(request: Request):
+async def players(request: Request):
     return templates.TemplateResponse('players.html', {'request': request})
 
 
 @router.get('/result-table')
-def result_table(request: Request):
+async def result_table(request: Request):
     return templates.TemplateResponse('results.html', {'request': request})

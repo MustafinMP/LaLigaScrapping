@@ -1,7 +1,7 @@
 from sqlalchemy import select, desc
 from sqlalchemy.orm import Session
 
-from backend.models.match import Match
+from models.match import Match
 from models.team import Team
 
 

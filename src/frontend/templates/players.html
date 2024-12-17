@@ -1,0 +1,27 @@
+{% extends "basic.html" %}
+
+{% block links %}
+<link rel="stylesheet" href="../static/css/players.css">
+{% endblock %}
+
+{% block content %}
+<section id="section-players">
+    <article class="player-data-header">
+        <p></p>
+        <p>Игрок</p>
+        <p class="score">Голы</p>
+        <p class="score">Ассисты</p>
+    </article>
+    <article class="player-data" v-for="pl in players_data">
+        <img :src="[[ pl.team.image ]]">
+        <p>[[ pl.nickname ]]</p>
+        <p class="score">[[ pl.goals_count ]]</p>
+        <p class="score">[[ pl.assists_count ]]</p>
+    </article>
+</section>
+<script>
+    let nav_item = document.querySelector('#players');
+    nav_item.classList.add('current-a');
+</script>
+<script type="module" src="../static/js/players.js"></script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "basic.html" %}
+
+{% block links %}
+<link rel="stylesheet" href="../static/css/matches.css">
+{% endblock %}
+
+{% block content %}
+<section id="section-matches">
+    <article class="match-data-header">
+        <p>Дата</p>
+        <div></div>
+        <p>Матч</p>
+        <div></div>
+    </article>
+    <article class="match-data" v-for="m in matches_data">
+        <p>[[ m.date ]]</p>
+        <p style="text-align: right; padding-right: 1rem">[[ m.home_team.name ]]</p>
+        <img :src="[[ m.home_team.image ]]">
+        <p class="score">[[ m.home_score ]]</p>
+        <p class="score">-</p>
+        <p class="score">[[ m.away_score ]]</p>
+        <img :src="[[ m.away_team.image ]]">
+        <p>[[ m.away_team.name ]]</p>
+    </article>
+</section>
+<script>
+    let nav_item = document.querySelector('#matches');
+    nav_item.classList.add('current-a');
+</script>
+<script type="module" src="../static/js/matches.js"></script>
+{% endblock %}

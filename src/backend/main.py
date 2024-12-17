@@ -1,5 +1,4 @@
 import asyncio
-import time
 from threading import Thread
 
 import uvicorn
@@ -7,7 +6,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
 
-import db_session
+from db_session import init_db
 from routers.matches import router as match_router
 from routers.goals import router as goals_router
 from routers.players import router as player_router
@@ -39,7 +38,7 @@ app.include_router(pages_router, prefix='')
 
 
 if __name__ == '__main__':
-    db_session.init_app()
+    init_db()
     scrap = Thread(target=asyncio.run, args=[scrapper.Scrapper.scrap_all_gameweeks()], daemon=True)
     scrap.start()
     uvicorn.run('main:app')
