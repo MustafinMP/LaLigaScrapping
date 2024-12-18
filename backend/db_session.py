@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, Session, declarative_base
 
 SqlAlchemyBase = declarative_base()
 
-DATABASE_URL = f"sqlite:///database/laliga.sqlite?check_same_thread=False"
+DATABASE_URL = f"sqlite:///../database/laliga.db?check_same_thread=False"
 SessionFactory = None
 
 

@@ -37,8 +37,8 @@ app.include_router(player_router, prefix='/api')
 app.include_router(pages_router, prefix='')
 
 
+init_db()
 if __name__ == '__main__':
-    init_db()
     scrap = Thread(target=asyncio.run, args=[scrapper.Scrapper.scrap_all_gameweeks()], daemon=True)
     scrap.start()
-    uvicorn.run('main:app')
+    uvicorn.run('main:app', host="0.0.0.0", port=8000)
