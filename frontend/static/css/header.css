@@ -1,0 +1,36 @@
+header {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+}
+
+.navbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+    height: 100px;
+}
+
+.navbar .container {
+    display: block;
+    padding-top: 35px;
+}
+
+.navbar .container a {
+    display: block;
+    text-align: center;
+    width: 60%;
+    margin-left: 20%;
+    height: 30px;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: black;
+}
+
+.navbar .container a:hover {
+    border-bottom: solid;
+    border-bottom-color: var(--primary);
+}
+
+.navbar .container .current-a {
+    border-bottom: solid;
+    border-bottom-color: var(--primary);
+}

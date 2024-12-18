@@ -1,0 +1,43 @@
+.result-data-header {
+    display: grid;
+    grid-template-columns: 1fr 6fr repeat(5, 1fr);
+    width: 100%;
+    height: 3rem;
+    padding: 0 1rem 0 1rem;
+    background: var(--primary);
+    color: white;
+    font-weight: bold;
+}
+
+.result-data {
+    display: grid;
+    grid-template-columns: 1fr 6fr repeat(5, 1fr);
+    height: 3rem;
+    padding: 0 1rem 0 1rem;
+    width: 100%;
+}
+
+.result-data:nth-child(odd) {
+    background: #eee;
+}
+
+.result-data img {
+    width: 2rem;
+    height: 2rem;
+    padding-top: 0.5rem;
+}
+
+.result-data .score {
+    color: var(--primary);
+    font-weight: bold;
+    text-align: center;
+}
+
+.result-data-header .score {
+     text-align: center;
+ }
+
+#section-results {
+    padding: 4rem 20% 20%;
+}
+
