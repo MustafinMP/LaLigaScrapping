@@ -12,10 +12,15 @@ git clone https://github.com/MustafinMP/LaLigaScrapping.git
 ```
 
 ## Сборка и запуск
-
+### Windows
 ```commandline
 cd LaLigaScrapping
 bash build.sh
+```
+### Linux
+```commandline
+cd LaLigaScrapping
+sudo build.sh
 ```
 
 ## Особенности первого запуска
