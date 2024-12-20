@@ -1,2 +1,2 @@
-docker-compose up
-docker-compose run
+docker compose -p laligascrapping up -d
+docker compose run
