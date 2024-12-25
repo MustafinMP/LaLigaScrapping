@@ -22,7 +22,7 @@ bash build.sh
 ### Linux
 ```commandline
 cd LaLigaScrapping
-sudo ./build.sh
+bash ./build.sh
 ```
 
 ## Особенности первого запуска
